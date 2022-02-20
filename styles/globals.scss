@@ -4,6 +4,14 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-image: url('https://images.squarespace-cdn.com/content/v1/5449c975e4b0f38a8beac149/1452575801640-W8U38EM7T6PYPE74WO5M/beans.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 a {
@@ -13,4 +21,29 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.centeredHoriContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centeredVertContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
 }
