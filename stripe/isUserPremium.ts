@@ -7,5 +7,5 @@ export default async function isUserPremium(): Promise<boolean> {
   const decodedToken = await firebase.auth()
     .currentUser?.getIdTokenResult()
 
-  return decodedToken?.claims?.stripeRole ? true : false
+  return decodedToken?.claims?.stripeRole
 }

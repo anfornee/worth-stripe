@@ -15,14 +15,14 @@ export async function createCheckoutSession(uid: string) {
       cancel_url: window.location.origin
     })
 
-    // Wait for the CheckoutSession to get attached by the extension
-    checkoutSessionRef.onSnapshot(async snap => {
-      const { sessionId } = snap.data()
-      if (sessionId) {
-        // We have a session. let's redirect to Checkout
-        // Init Stripe
-        const stripe = await getStripe()
-        stripe.redirectToCheckout({ sessionId })
-      }
-    })
+  // Wait for the CheckoutSession to get attached by the extension
+  checkoutSessionRef.onSnapshot(async snap => {
+    const { sessionId } = snap.data()
+    if (sessionId) {
+      // We have a session. let's redirect to Checkout
+      // Init Stripe
+      const stripe = await getStripe()
+      stripe.redirectToCheckout({ sessionId })
+    }
+  })
 }
