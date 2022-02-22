@@ -1,13 +1,11 @@
 import React, { ReactElement } from 'react'
-import firebase from '../firebase/firebaseClient'
+import { auth } from '../firebase/firebaseClient'
 
 interface Props {}
 
 const Logout = ({}: Props): ReactElement => {
   const handleLogoutClicked= async () => {
-    return await firebase
-      .auth()
-      .signOut()
+    return await auth.signOut()
   }
 
   return (

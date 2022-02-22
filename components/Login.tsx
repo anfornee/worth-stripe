@@ -1,49 +1,25 @@
 import React, { ReactElement } from 'react'
-import firebase from '../firebase/firebaseClient'
+import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth"
+import { auth } from '../firebase/firebaseClient'
+import Button from '@mui/material/Button'
 
 interface Props {}
 
 const Login = ({}: Props): ReactElement => {
-  const signInWithGithub = async () => {
-    const userCredentials = await firebase
-      .auth()
-      .signInWithPopup(new firebase.auth.GithubAuthProvider())
-
-    firebase.firestore()
-      .collection('users')
-      .doc(userCredentials.user.uid)
-      .set({
-        uid: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        provider: userCredentials.user.providerData[0].providerId,
-        photoUrl: userCredentials.user.photoURL
-      })
-  }
 
   const signInWithGoogle = async () => {
-    const userCredentials = await firebase
-      .auth()
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-
-    firebase.firestore()
-      .collection('users')
-      .doc(userCredentials.user.uid)
-      .set({
-        uid: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        provider: userCredentials.user.providerData[0].providerId,
-        photoUrl: userCredentials.user.photoURL
-      })
+    const provider = new GoogleAuthProvider()
+    signInWithRedirect(auth, provider)
   }
 
   return (
     <div>
-      <button onClick={() => signInWithGithub()}>
-        Sign in with Github
-      </button>
-      <button onClick={() => signInWithGoogle()}>
+      <Button
+        variant='contained'
+        onClick={() => signInWithGoogle()}
+      >
         Sign in with Google
-      </button>
+      </Button>
     </div>
   )
 }

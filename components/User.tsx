@@ -1,6 +1,7 @@
 import React from 'react'
 import Logout from './Logout'
 import { createCheckoutSession } from '../stripe/createCheckoutSession'
+import { createPortalLink } from '../stripe/createPoralLink'
 import usePremiumStatus from '../stripe/usePremiumStatus'
 import Button from '@mui/material/Button'
 import userStyles from '../styles/User.module.scss'
@@ -24,9 +25,9 @@ const products = [
   }
 ]
 
-const productButton = (userData, product, i) => (
+const productButton = (userData: Object, product: Object, i: Number) => (
   <Button
-    key={i}
+    key={i.toString()}
     variant='contained'
     className={userStyles.optionButtons}
     onClick={() => createCheckoutSession(userData.uid, product.price)}
@@ -50,9 +51,12 @@ const User = ({ userData }) => {
             <h2>Have a cooke, Premium guy!</h2>
             <Button
               variant='contained'
-              onClick={() => console.log('Erase ME!')}
+              onClick={async () => {
+                const data = await createPortalLink(userData.uid)
+                console.log(data)
+              }}
             >
-              Cancel Subscription
+              Manage Subscription
             </Button>
           </div>
         )}

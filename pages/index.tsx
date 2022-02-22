@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase from '../firebase/firebaseClient'
+import { auth } from '../firebase/firebaseClient'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Layout from '../components/layout/Layout'
 import User from '../components/User'
@@ -7,7 +7,7 @@ import Intro from '../components/Intro'
 import homeStyles from '../styles/Home.module.scss'
 
 const Home = () => {
-  const [userData, userLoading] = useAuthState(firebase.auth())
+  const [userData, userLoading] = useAuthState(auth)
   return (
     <Layout>
       <div className={homeStyles.mainContainer}>
