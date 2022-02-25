@@ -8,6 +8,7 @@ import homeStyles from '../styles/Home.module.scss'
 
 const Home = () => {
   const [userData, userLoading] = useAuthState(auth)
+
   return (
     <Layout>
       <div className={homeStyles.mainContainer}>
