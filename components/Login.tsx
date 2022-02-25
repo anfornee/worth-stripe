@@ -37,7 +37,6 @@ const Login = ({ }: Props): ReactElement => {
       photoUrl: user.photoURL
     }
     await setDoc(doc(firestore, 'users', user.uid), userDetails) 
-    console.log('Document Added')
   }
 
 
