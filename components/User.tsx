@@ -25,41 +25,51 @@ const products = [
   }
 ]
 
-const productButton = (userData: Object, product: Object, i: Number) => (
-  <Button
-    key={i.toString()}
-    variant='contained'
-    className={userStyles.optionButtons}
-    onClick={() => createCheckoutSession(userData.uid, product.price)}
-  >
-    {product.title}
-  </Button>
-)
-
 const User = ({ userData }) => {
-  const userIsSubscribed = usePremiumStatus(userData)
+  const subscriptionStatus = usePremiumStatus(userData)
+
+  const userNotSubscribedContent = (
+    <div className='centeredVertContainer'>
+      {products.map((product, i) => (
+        <Button
+          key={i.toString()}
+          variant='contained'
+          className={userStyles.optionButtons}
+          onClick={() => createCheckoutSession(userData.uid, product.price)}
+        >
+          {product.title}
+        </Button>
+      ))}
+    </div>
+  )
+
+  const userSubscribedContent = (
+    <div>
+      <p>
+        <span className='block'>You are currently subscribed</span>
+        <span className='block'>to the {subscriptionStatus} plan!</span>
+        <Button
+          variant='contained'
+          onClick={async () => {
+            const data = await createPortalLink(userData.uid)
+            console.log(data)
+          }}
+        >
+          Manage Subscription
+        </Button>
+      </p>
+    </div>
+  )
+
   return (
     <div className='centeredVertContainer text-center'>
       <div>
         <h1>Hello, {userData.displayName}</h1>
-        {!userIsSubscribed ? (
-          <div className='centeredVertContainer'>
-            {products.map((product, i) => productButton(userData, product, i))}
-          </div>
-        ) : (
-          <div>
-            <h2>Have a cooke, Premium guy!</h2>
-            <Button
-              variant='contained'
-              onClick={async () => {
-                const data = await createPortalLink(userData.uid)
-                console.log(data)
-              }}
-            >
-              Manage Subscription
-            </Button>
-          </div>
-        )}
+        {
+          !subscriptionStatus
+            ? userNotSubscribedContent
+            : userSubscribedContent
+        }
         <Logout />
       </div>
     </div>
