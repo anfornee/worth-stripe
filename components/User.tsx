@@ -2,7 +2,8 @@ import React from 'react'
 import Logout from './Logout'
 import { createCheckoutSession } from '../stripe/createCheckoutSession'
 import { createPortalLink } from '../stripe/createPoralLink'
-import usePremiumStatus from '../stripe/usePremiumStatus'
+import { postData } from '../utils/helpers'
+import usePremiumStatus from '../stripe/useSubscriptionStatus'
 import Button from '@mui/material/Button'
 import userStyles from '../styles/User.module.scss'
 
@@ -51,8 +52,17 @@ const User = ({ userData }) => {
         <Button
           variant='contained'
           onClick={async () => {
-            const data = await createPortalLink(userData.uid)
-            console.log(data)
+            try {
+              const { url, error } = await postData({
+                url: '/api/create-portal-link',
+                data: {
+                  user: userData
+                }
+              })
+              window.location.assign(url);
+            } catch (error) {
+              if (error) return new Error(error)
+            }
           }}
         >
           Manage Subscription

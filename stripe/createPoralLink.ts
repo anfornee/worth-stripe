@@ -2,7 +2,6 @@ import { firestore } from '../firebase/firebaseClient'
 import { getFunctions, httpsCallable } from 'firebase/functions'
 
 export async function createPortalLink(uid: string) {
-  console.log(uid)
   const functions = getFunctions(firestore.app, 'us-central1')
 
   const functionRef = httpsCallable(functions, 'ext-firestore-stripe-payments-createPortalLink')
