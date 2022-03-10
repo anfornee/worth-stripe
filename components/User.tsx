@@ -51,19 +51,20 @@ const User = ({ userData }) => {
         <span className='block'>to the {subscriptionStatus} plan!</span>
         <Button
           variant='contained'
-          onClick={async () => {
-            try {
-              const { url, error } = await postData({
-                url: '/api/create-portal-link',
-                data: {
-                  user: userData
-                }
-              })
-              window.location.assign(url);
-            } catch (error) {
-              if (error) return new Error(error)
-            }
-          }}
+          onClick={() => createPortalLink(userData.email, userData.uid)}
+          // onClick={async () => {
+          //   try {
+          //     const { url, error } = await postData({
+          //       url: '/api/create-portal-link',
+          //       data: {
+          //         user: userData
+          //       }
+          //     })
+          //     window.location.assign(url)
+          //   } catch (error) {
+          //     if (error) return new Error(error)
+          //   }
+          // }}
         >
           Manage Subscription
         </Button>
