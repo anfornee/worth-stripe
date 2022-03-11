@@ -5,7 +5,7 @@ let stripePromise: Stripe | null
 const initializeStripe = async () => {
   if (!stripePromise) {
     stripePromise = await loadStripe(
-      "pk_test_7LxXo0RV9TXL1LwzV4MuPF9h"
+      process.env.STRIPE_SECRET_KEY_TEST
     )
   }
   return stripePromise

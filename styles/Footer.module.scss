@@ -1,0 +1,16 @@
+.footerContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.footerLogo {
+  max-width: 17%;
+  margin: 1% 0 0 3%;
+}

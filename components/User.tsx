@@ -1,9 +1,8 @@
 import React from 'react'
 import Logout from './Logout'
 import { createCheckoutSession } from '../stripe/createCheckoutSession'
-import { createPortalLink } from '../stripe/createPoralLink'
 import { postData } from '../utils/helpers'
-import usePremiumStatus from '../stripe/useSubscriptionStatus'
+import useSubscriptionStatus from '../stripe/useSubscriptionStatus'
 import Button from '@mui/material/Button'
 import userStyles from '../styles/User.module.scss'
 
@@ -27,7 +26,22 @@ const products = [
 ]
 
 const User = ({ userData }) => {
-  const subscriptionStatus = usePremiumStatus(userData)
+  const subscriptionStatus = useSubscriptionStatus(userData)
+
+  const createPortalLink = async () => {
+    try {
+      const { url, error } = await postData({
+        url: '/api/create-portal-link',
+        data: {
+          user: userData
+        }
+      })
+      if (error) throw new Error(error)
+      window.location.assign(url)
+    } catch (error) {
+      if (error) return new Error(error)
+    }
+  }
 
   const userNotSubscribedContent = (
     <div className='centeredVertContainer'>
@@ -51,20 +65,7 @@ const User = ({ userData }) => {
         <span className='block'>to the {subscriptionStatus} plan!</span>
         <Button
           variant='contained'
-          onClick={() => createPortalLink(userData.email, userData.uid)}
-          // onClick={async () => {
-          //   try {
-          //     const { url, error } = await postData({
-          //       url: '/api/create-portal-link',
-          //       data: {
-          //         user: userData
-          //       }
-          //     })
-          //     window.location.assign(url)
-          //   } catch (error) {
-          //     if (error) return new Error(error)
-          //   }
-          // }}
+          onClick={createPortalLink}
         >
           Manage Subscription
         </Button>

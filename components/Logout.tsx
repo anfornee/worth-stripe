@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { auth } from '../firebase/firebaseClient'
+import Button from '@mui/material/Button'
 
 interface Props {}
 
@@ -10,9 +11,12 @@ const Logout = ({}: Props): ReactElement => {
 
   return (
     <div>
-      <button onClick={handleLogoutClicked}>
+      <Button
+        variant='contained'
+        onClick={handleLogoutClicked}
+      >
         Log Out
-      </button>
+      </Button>
     </div>
   )
 }
