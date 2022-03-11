@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <Layout>
       <Header user={userData} />
-      <div className={homeStyles.mainContainer}>
+      <div>
         {!userData && !userLoading && <Intro />}
         {userData && !userLoading && (
           <User userData={userData} />

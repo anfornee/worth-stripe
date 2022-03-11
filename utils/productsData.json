@@ -1,0 +1,20 @@
+[
+  {
+    "title": "One Bag Per Month",
+    "description": "1 12oz(340g) bag of whole bean Worth Coffee once a month. *Includes Shipping",
+    "cost": "$20",
+    "price": "price_1KUn4eGcvZKv3JxvgaWSJwZO"
+  },
+  {
+    "title": "Two Bags Per Month",
+    "description": "1 12oz(340g) bag of Worth Coffee every 2 weeks. *Includes Shipping",
+    "cost": "$40",
+    "price": "price_1KUn5VGcvZKv3Jxv0eiKFPOM"
+  },
+  {
+    "title": "Four Bags Per Month",
+    "description": "1 12oz(340g) bag of Worth Coffee every week. *Includes Shipping",
+    "cost": "$80",
+    "price": "price_1KUn6mGcvZKv3JxvYFJ33rNz"
+  }
+]

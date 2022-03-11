@@ -4,9 +4,10 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-image: url('https://images.squarespace-cdn.com/content/v1/5449c975e4b0f38a8beac149/1452575801640-W8U38EM7T6PYPE74WO5M/beans.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url('https://images.squarespace-cdn.com/content/v1/5449c975e4b0f38a8beac149/1452575801640-W8U38EM7T6PYPE74WO5M/beans.jpg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  background-color: rgb(61, 61, 61) !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,4 +51,16 @@ a {
 
 .block {
   display: block;
+}
+
+button.optionButton {
+  margin: .5em 0;
+  width: 80%;
+}
+
+.subscriptionCard {
+  width: 80%;
+  background: #FFF;
+  border-radius: 10px;
+  margin: 0 0 1em;
 }
