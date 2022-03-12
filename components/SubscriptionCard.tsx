@@ -1,23 +1,30 @@
 import React from 'react'
 import { createCheckoutSession } from '../stripe/createCheckoutSession'
+import Spacer from '../components/layout/Spacer'
 import Button from '@mui/material/Button'
+import styles from '../styles/SubscriptionCard.module.scss'
 
 const SubscriptionCard = ({ userData, productData }) => (
-  <div className='subscriptionCard'>
+  <div className={styles.subscriptionCard}>
     <p>
-      <span className='block'>
+      <span className={'block ' + styles.subTitle}>
         {productData.title}
       </span>
-      <span className='block'>
+      <Spacer height='.25em' />
+      <span className={'block ' + styles.subDesc}>
         {productData.description}
       </span>
-      <span className='block'>
-        {productData.cost}/month
+      <Spacer height='.25em' />
+      <span className={'block ' + styles.subCost}>
+        {productData.cost}
+        <span className={styles.monthText}>
+          /month
+        </span>
       </span>
     </p>
     <Button
       variant='contained'
-      className='optionButton'
+      className={styles.optionButton}
       onClick={() => createCheckoutSession(userData.uid, productData.price)}
     >
       SUBSCRIBE

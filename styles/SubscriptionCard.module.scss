@@ -1,0 +1,32 @@
+.subscriptionCard {
+  width: 80%;
+  background: #FFF;
+  border-radius: 10px;
+  padding: 1em;
+  margin: 0 0 2em;
+}
+
+.optionButton {
+  margin: .5em 0;
+  width: 90%;
+}
+
+.subTitle {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.subDesc {
+  font-size: .8em;
+}
+
+.subCost {
+  font-size: 3em;
+
+  .monthText {
+    font-size: .5em;
+    letter-spacing: -1px;
+    position: relative;
+    right: 2px;
+  }
+}

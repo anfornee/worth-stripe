@@ -2,6 +2,8 @@ import React from 'react'
 import { postData } from '../utils/helpers'
 import useSubscriptionStatus from '../stripe/useSubscriptionStatus'
 import SubscriptionCard from './SubscriptionCard'
+import UserSubscribed from './UserSubscribed'
+import UserNotSubscribed from './UserNotSubscribed'
 import Button from '@mui/material/Button'
 import userStyles from '../styles/User.module.scss'
 import products from '../utils/productsData.json'
@@ -66,15 +68,15 @@ const User = ({ userData }) => {
   )
 
   return (
-    <div className='centeredVertContainer text-center'>
+    <div className={'centeredVertContainer text-center ' + userStyles.userContainer}>
       <div>
         <h1 className={userStyles.displayName}>
-          Hello, {userData.displayName}
+          Hello, {userData.displayName.split(' ')[0]}
         </h1>
         {
           !subscriptionStatus
-            ? userNotSubscribedContent
-            : userSubscribedContent
+            ? <UserNotSubscribed userData={userData} />
+            : <UserSubscribed createPortalLink={createPortalLink} subscriptionStatus={subscriptionStatus} />
         }
       </div>
     </div>

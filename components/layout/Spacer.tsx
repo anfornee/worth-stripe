@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Spacer = ({ height }) => (
-  <div style={{ width: '100%', minHeight: height }} />
+  <span style={{ display: 'block', width: '100%', minHeight: height }} />
 )
 
 export default Spacer

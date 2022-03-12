@@ -1,15 +1,13 @@
 import React from 'react'
-import Login from './Login'
+import Login from './login/Login'
+import styles from '../styles/Intro.module.scss'
 
 const Intro = () => {
   return (
-    <div className='centeredVertContainer'>
-      <h1>
-        Worth Coffee Roasters
+    <div className={'centeredVertContainer ' + styles.introContainer}>
+      <h1 className={styles.loginTitle}>
+        Log in to the Subscription Portal
       </h1>
-      <h3>
-        Subscription Portal
-      </h3>
       <Login />
     </div>
   )

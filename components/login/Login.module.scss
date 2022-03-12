@@ -1,0 +1,23 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.emailLoginContainer {
+  width: 100%;
+}
+
+.emailForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.emailLoginButton {
+  width: 100%;
+}
