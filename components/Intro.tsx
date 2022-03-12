@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Login from './login/Login'
+import SignUp from './login/SignUp'
 import styles from '../styles/Intro.module.scss'
 
-const Intro = () => {
+const Intro = ({ setName }) => {
+  const [isSignUp, setIsSignUp] = useState(false)
+
   return (
     <div className={'centeredVertContainer ' + styles.introContainer}>
-      <h1 className={styles.loginTitle}>
-        Log in to the Subscription Portal
-      </h1>
-      <Login />
+      {
+        isSignUp
+          ? <SignUp setIsSignUp={setIsSignUp} setName={setName} />
+          : <Login setIsSignUp={setIsSignUp} />
+      }
     </div>
   )
 }

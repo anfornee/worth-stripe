@@ -1,27 +1,26 @@
-import React, { ReactElement, useState } from 'react'
-import {
-  signInWithRedirect,
-  signInWithPopup,
-  createUserWithEmailAndPassword
-} from "firebase/auth"
-import { doc, setDoc, collection } from 'firebase/firestore'
-import { auth, firestore } from '../../firebase/firebaseClient'
+import React from 'react'
+import AppleLogin from './AppleLogin'
 import EmailLogin from './EmailLogin'
 import GoogleLogin from './GoogleLogin'
+import Spacer from '../layout/Spacer'
 import Button from '@mui/material/Button'
 import styles from './Login.module.scss'
 
-interface Props { }
-
-const Login = ({ }: Props): ReactElement => {
-
-  return (
-    <div className={styles.loginContainer}>
-      <EmailLogin styles={styles} />
-      <br />
-      <GoogleLogin styles={styles} />
-    </div>
-  )
-}
+const Login = ({ setIsSignUp }) => (
+  <div className={styles.loginContainer}>
+    <h1 className={styles.loginTitle}>
+      Log in to the Subscription Portal
+    </h1>
+    <EmailLogin styles={styles} />
+    <Spacer height='1em' />
+    <Button fullWidth variant='contained' onClick={() => setIsSignUp(true)}>
+      Sign Up
+    </Button>
+    <Spacer height='1em' />
+    <GoogleLogin styles={styles} />
+    <Spacer height='1em' />
+    <AppleLogin styles={styles} />
+  </div>
+)
 
 export default Login

@@ -38,9 +38,9 @@ const EmailLogin = ({ styles }) => {
         onChange={e => setEmail(e.target.value)}
       />
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
-        <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+        <InputLabel htmlFor='login-password'>Password</InputLabel>
         <OutlinedInput
-          id='outlined-adornment-password'
+          id='login-password'
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={e => setPassword(e.target.value)}

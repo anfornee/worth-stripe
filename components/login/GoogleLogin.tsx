@@ -9,7 +9,7 @@ import { auth, firestore } from '../../firebase/firebaseClient'
 import Button from '@mui/material/Button'
 import googleIcon from '../../public/icons/google-icon.png'
 
-const GoogleLogin = ({ styles }) => {
+const GoogleLogin = ({ styles, isSignUp = false }) => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     const { user } = await signInWithPopup(auth, provider)
@@ -20,18 +20,22 @@ const GoogleLogin = ({ styles }) => {
       provider: user.providerData[0].providerId,
       photoUrl: user.photoURL
     }
-    await setDoc(doc(firestore, 'users', user.uid), userDetails) 
+    await setDoc(doc(firestore, 'users', user.uid), userDetails)
   }
 
   return (
     <Button
       variant='contained'
-      className={styles.googleButton}
+      className={styles.externalAuthButton}
       onClick={() => signInWithGoogle()}
       startIcon={<Image src={googleIcon} width='25' height='25' />}
       fullWidth
     >
-      Sign in with Google
+      {
+        isSignUp
+          ? 'Sign Up With Google'
+          : 'Log in with Google'
+      }
     </Button>
   )
 }
