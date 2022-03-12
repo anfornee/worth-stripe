@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
 import {
   createUserWithEmailAndPassword
-} from "firebase/auth"
+} from 'firebase/auth'
 import { doc, setDoc, collection } from 'firebase/firestore'
 import { auth, firestore } from '../../firebase/firebaseClient'
+import Spacer from '../layout/Spacer'
 import {
   Button,
   TextField,
   OutlinedInput,
   InputAdornment,
   IconButton,
-  FormControl
+  FormControl,
+  InputLabel
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const EmailLogin = ({ styles }) => {
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -31,18 +32,15 @@ const EmailLogin = ({ styles }) => {
   return (
     <div className={styles.emailForm}>
       <TextField
-        label='Name'
-        id='login-name'
-        sx={{ m: 1, width: '100%' }}
-      />
-      <TextField
         label='Email'
         id='login-email'
         sx={{ m: 1, width: '100%' }}
+        onChange={e => setEmail(e.target.value)}
       />
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
+        <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
         <OutlinedInput
-          id='login-password'
+          id='outlined-adornment-password'
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={e => setPassword(e.target.value)}
@@ -61,12 +59,13 @@ const EmailLogin = ({ styles }) => {
           label='Password'
         />
       </FormControl>
+      <Spacer height='.75em' />
       <Button
         variant='contained'
         className={styles.emailLoginButton}
-        onClick={() => signUpWithEmail()}
+        onClick={signUpWithEmail}
       >
-        Log In
+        Log In With Email
       </Button>
     </div>
   )

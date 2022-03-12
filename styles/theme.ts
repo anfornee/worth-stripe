@@ -8,7 +8,7 @@ let theme = createTheme({
     },
     secondary: {
       main: '#c39a6a'
-    },
+    }
   }
 })
 

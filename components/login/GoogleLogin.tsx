@@ -1,11 +1,13 @@
 import React from 'react'
+import Image from 'next/image'
 import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth'
-import { doc, setDoc, collection } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '../../firebase/firebaseClient'
 import Button from '@mui/material/Button'
+import googleIcon from '../../public/icons/google-icon.png'
 
 const GoogleLogin = ({ styles }) => {
   const signInWithGoogle = async () => {
@@ -24,7 +26,9 @@ const GoogleLogin = ({ styles }) => {
   return (
     <Button
       variant='contained'
+      className={styles.googleButton}
       onClick={() => signInWithGoogle()}
+      startIcon={<Image src={googleIcon} width='25' height='25' />}
       fullWidth
     >
       Sign in with Google
