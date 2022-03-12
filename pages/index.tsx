@@ -48,7 +48,7 @@ const Home = () => {
           <User userData={userData} />
         )}
       </div>
-      <Footer user={userData} />
+      <Footer user={userData} setLoggedIn={setLoggedIn}/>
     </Layout>
   )
 }

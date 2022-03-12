@@ -4,9 +4,9 @@ import Logout from '../Logout'
 import styles from '../../styles/Footer.module.scss'
 import worthCrest from '../../public/images/worth_crest_small.jpeg'
 
-const Footer = ({ user }) => {
+const Footer = ({ user, setLoggedIn }) => {
   const signedInContent = (
-    <Logout />
+    <Logout setLoggedIn={setLoggedIn} />
   )
 
   const notSignedInContent = (

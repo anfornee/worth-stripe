@@ -1,12 +1,11 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { auth } from '../firebase/firebaseClient'
 import Button from '@mui/material/Button'
 
-interface Props {}
-
-const Logout = ({}: Props): ReactElement => {
-  const handleLogoutClicked= async () => {
-    return await auth.signOut()
+const Logout = ({ setLoggedIn }) => {
+  const handleLogoutClicked = async () => {
+    await auth.signOut()
+    setLoggedIn(false)
   }
 
   return (
