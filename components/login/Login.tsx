@@ -1,5 +1,4 @@
 import React from 'react'
-import AppleLogin from './AppleLogin'
 import EmailLogin from './EmailLogin'
 import GoogleLogin from './GoogleLogin'
 import Spacer from '../layout/Spacer'
@@ -18,8 +17,6 @@ const Login = ({ setIsSignUp }) => (
     </Button>
     <Spacer height='1em' />
     <GoogleLogin styles={styles} />
-    <Spacer height='1em' />
-    <AppleLogin styles={styles} />
   </div>
 )
 

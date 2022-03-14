@@ -38,3 +38,21 @@ export const toDateTime = (secs: number) => {
   t.setSeconds(secs)
   return t
 }
+
+export const validateEmail = (email: string) => {
+  return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))
+}
+
+export const validatePassword = (password: string) => {
+  return (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password))
+}
+
+export const validateFirstLastName = (fullName: string) => {
+  const nameArray = fullName.split(' ')
+  if (nameArray.length !== 2) return false
+  if (
+    !(/^[a-z ,.'-]+$/i.test(nameArray[0])) ||
+    !(/^[a-z ,.'-]+$/i.test(nameArray[1]))
+   ) return false
+   return true
+}

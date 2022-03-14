@@ -1,19 +1,27 @@
 import React, { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase/firebaseClient'
+import {
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
+import { auth, firestore } from '../../firebase/firebaseClient'
 import Spacer from '../layout/Spacer'
-import { validateEmail, validatePassword } from '../../utils/helpers'
+import { 
+  validateEmail,
+  validatePassword,
+  validateFirstLastName
+} from '../../utils/helpers'
 import {
   Button,
   OutlinedInput,
   InputAdornment,
   IconButton,
   FormControl,
-  InputLabel
+  InputLabel,
+  TextField
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-const EmailLogin = ({ styles }) => {
+const EmailSignUp = ({ setName, styles }) => {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = useState('Please enter a valid email.')
@@ -22,22 +30,24 @@ const EmailLogin = ({ styles }) => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('Password must be at least 8 characters long and contain one letter, one number and one special character.')
   const [showPassword, setShowPassword] = useState(false)
 
-  const logInWithEmail = e => {
+  const signUpWithEmail = e => {
     e.preventDefault()
+    // const validName = validateFirstLastName(userName)
     const validEmail = validateEmail(email)
     const validPassword = validatePassword(password)
 
     if (validEmail && validPassword) {
       setEmailError(false)
       setPasswordError(false)
-      signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          const { user } = userCredential
-          console.log(user)
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async userCredentials => {
+          const { user } = userCredentials
+          const userRef = doc(firestore, 'users', user.uid)
+          await setDoc(userRef, JSON.parse(JSON.stringify(user)))
         })
         .catch(error => {
-          if (error.message === 'Firebase: Error (auth/user-not-found).') {
-            setEmailErrorMessage('User not found.')
+          if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+            setEmailErrorMessage('This email is already in use.')
             setEmailError(true)
           } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
             setPasswordErrorMessage('Incorrect password')
@@ -51,11 +61,34 @@ const EmailLogin = ({ styles }) => {
   }
 
   return (
-    <form onSubmit={logInWithEmail} className={styles.emailForm}>
-      <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
-        <InputLabel htmlFor='login-email'>Email</InputLabel>
+    <form onSubmit={signUpWithEmail} className={styles.emailForm}>
+      {/* <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
+        <InputLabel htmlFor='signup-name'>First and Last Name</InputLabel>
         <OutlinedInput
-          id='login-email'
+          id='signup-name'
+          type='text'
+          value={userName}
+          error={nameError}
+          required
+          onChange={e => setUserName(e.target.value)}
+          label='First And Last Name'
+        />
+      </FormControl>
+      {
+        nameError
+          ? <span className={styles.formError}>Please enter your first and last.</span>
+          : <Spacer height='.95em' />
+      } */}
+      {/* <TextField
+        label='First and Last Name'
+        id='signup-name'
+        sx={{ m: 1, width: '100%' }}
+        onChange={e => setName(e.target.value)}
+      /> */}
+      <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
+        <InputLabel htmlFor='signup-email'>Email</InputLabel>
+        <OutlinedInput
+          id='signup-email'
           type='email'
           value={email}
           error={emailError}
@@ -70,9 +103,9 @@ const EmailLogin = ({ styles }) => {
           : <Spacer height='.95em' />
       }
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
-        <InputLabel htmlFor='login-password'>Password</InputLabel>
+        <InputLabel htmlFor='signup-password'>Password</InputLabel>
         <OutlinedInput
-          id='login-password'
+          id='signup-password'
           type={showPassword ? 'text' : 'password'}
           value={password}
           error={passwordError}
@@ -103,11 +136,12 @@ const EmailLogin = ({ styles }) => {
         type='submit'
         variant='contained'
         className={styles.emailLoginButton}
+        onClick={signUpWithEmail}
       >
-        Log In With Email
+        Sign Up With Email
       </Button>
     </form>
   )
 }
 
-export default EmailLogin
+export default EmailSignUp
