@@ -1,11 +1,11 @@
 import React from 'react'
 import SubscriptionCard from '../subscriptions/SubscriptionCard'
-import userStyles from './User.module.scss'
+import styles from './User.module.scss'
 import products from '../../utils/productsData.json'
 
 const UserNotSubscribed = ({ userData }) => (
-  <div className='centeredVertContainer'>
-    <p className={userStyles.notSubscribedIntro}>
+  <div className={'centeredVertContainer ' + styles.userNotSubscribedContainer}>
+    <p className={styles.notSubscribedIntro}>
       <span className='block'>
         You are not currently subscribed
       </span>

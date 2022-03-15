@@ -4,15 +4,14 @@ import { NextApiRequest, NextApiResponse } from 'next'
 const createPortalLink = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
-      const { user } = req.body
-      if (!user) throw Error('Could not get user')
+      const { email } = req.body
+      if (!email) throw Error('Could not get email')
 
-      const customer = await stripe.customers.list({ email: user.email })
-      if (!customer) throw Error('Could not get customer')
+      const customer = await stripe.customers.list({ email })
 
       const { url } = await stripe.billingPortal.sessions.create({
         customer: customer.data[0].id,
-        return_url: `http://localhost:3000`
+        return_url: process.env.URL
       })
 
       return res.status(200).json({ url })

@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <Layout>
       <Header user={userData} />
-      <div style={{ width: '100vw' }}>
+      <div className='mainContainer'>
         {!loggedIn && !userData && !userLoading && <Intro />}
         {loggedIn && userData && !userLoading && (
           <User userData={userData} />
