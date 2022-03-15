@@ -17,6 +17,7 @@ body {
 
 .mainContainer {
   width: 100vw;
+  height: calc(100vh - 8em);
   overflow: scroll;
 }
 
@@ -49,6 +50,12 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin: 0 0 4em;
+}
+
+.h100 {
+  height: 100%;
 }
 
 .text-left {

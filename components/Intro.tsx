@@ -7,7 +7,7 @@ const Intro = () => {
   const [isSignUp, setIsSignUp] = useState(false)
 
   return (
-    <div className={'centeredVertContainer ' + styles.introContainer}>
+    <div className='centeredVertContainer h100'>
       {
         isSignUp
           ? <SignUp setIsSignUp={setIsSignUp} />
