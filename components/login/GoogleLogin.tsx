@@ -28,7 +28,7 @@ const GoogleLogin = ({ styles, isSignUp = false }) => {
       variant='contained'
       className={styles.externalAuthButton}
       onClick={() => signInWithGoogle()}
-      startIcon={<Image src={googleIcon} width='25' height='25' />}
+      startIcon={<Image src={googleIcon} alt='' width='25' height='25' />}
       fullWidth
     >
       {

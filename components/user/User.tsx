@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { postData } from '../../utils/helpers'
 import useSubscriptionStatus from '../../stripe/useSubscriptionStatus'
 import UserSubscribed from './UserSubscribed'
@@ -16,18 +16,18 @@ const User = ({ userData }) => {
   const [email, setEmail] = useState(userData.email)
   const [newEmail, setNewEmail] = useState(userData.email !== email)
 
-  const getSubscriptionData = async () => {
+  const getSubscriptionData = useCallback(async () => {
     const userRef = collection(firestore, `users/${userData.uid}/subscriptions`)
     const docSnap = await getDocs(userRef)
     const nextPaymentDate = new Date(docSnap.docs[0].data().current_period_end.seconds * 1000)
     setDate(`${months[nextPaymentDate.getMonth()]} ${nextPaymentDate.getDate()}, ${nextPaymentDate.getFullYear()}`)
     return docSnap.docs[0].id
-  }
+  }, [userData.uid])
 
   /**
    * MAY NOT EVEN NEED TO GET DATE HEAR JUST COMPARE EMAILS
    */
-  const getNextPaymentDate = async subId => {
+  const getNextPaymentDate = useCallback(async subId => {
     try {
       const { nextPaymentUnix, differentEmail } = await postData({
         url: '/api/get-next-payment-date',
@@ -40,7 +40,7 @@ const User = ({ userData }) => {
     } catch (error) {
       if (error) return new Error(error)
     }
-  }
+  }, [userData.email])
 
   const userTitle = (
     <h1 className={styles.displayName}>
@@ -59,7 +59,7 @@ const User = ({ userData }) => {
     }
     email !== userData.email && setNewEmail(true)
     // ) getNextPaymentDate()
-  }, [subscriptionStatus, date, email])
+  }, [subscriptionStatus, date, email, getNextPaymentDate, getSubscriptionData, userData.email])
 
   return (
     <div className='centeredVertContainer'>

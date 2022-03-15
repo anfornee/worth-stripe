@@ -28,7 +28,7 @@ const AppleLogin = ({ styles, isSignUp = false }) => {
       variant='contained'
       className={styles.externalAuthButton}
       onClick={() => signInWithGoogle()}
-      startIcon={<Image src={appleIcon} width='25' height='25' />}
+      startIcon={<Image src={appleIcon} alt='' width='25' height='25' />}
       fullWidth
     >
       {

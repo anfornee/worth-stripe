@@ -5,5 +5,7 @@ export default async function userSubscription(): Promise<string> {
 
   const decodedToken = await auth.currentUser?.getIdTokenResult()
 
-  return decodedToken?.claims?.stripeRole
+  const subscription: any = decodedToken?.claims?.stripeRole
+
+  return subscription
 }

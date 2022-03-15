@@ -12,9 +12,10 @@ export const siteTitle = 'Subscriptions | Worth Coffee Roasters'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-const MyApp = props => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-
+export default function MyApp (props) {
+  // const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const { Component, pageProps } = props
+  const emotionCache = clientSideEmotionCache
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -41,5 +42,3 @@ const MyApp = props => {
     </CacheProvider>
   )
 }
-
-export default MyApp

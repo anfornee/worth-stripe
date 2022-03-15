@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import userSubscription from './userSubscription'
 
-const useSubscriptionStatus = (user: Object) => {
-  const [subscriptionStatus, setSubscriptionSatus] = useState<string>('')
+const useSubscriptionStatus = (user) => {
+  const [subscriptionStatus, setSubscriptionSatus] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -22,10 +22,8 @@ const useSubscriptionStatus = (user: Object) => {
   ) {
     return subscriptionStatus
       .charAt(0)
-      .toUpperCase() + subscriptionStatus.slice(1)
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-  } 
-  else if (subscriptionStatus === 'User is not subscribed.') {
+      .toUpperCase() + subscriptionStatus.slice(1).replace(/([a-z])([A-Z])/g, '$1 $2')
+  } else if (subscriptionStatus === 'User is not subscribed.') {
     return subscriptionStatus
   }
 }

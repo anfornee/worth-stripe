@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { doc, setDoc } from 'firebase/firestore'
-import { auth, firestore } from '../firebase/firebaseClient'
+import firebase, { auth, firestore } from '../firebase/firebaseClient'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { onAuthStateChanged, updateProfile } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth'
 import Header from '../components/layout/header/Header'
 import Footer from '../components/layout/footer/Footer'
 import Layout from '../components/layout/Layout'
@@ -10,7 +10,7 @@ import User from '../components/user/User'
 import Intro from '../components/Intro'
 
 const Home = () => {
-  const [userData, userLoading] = useAuthState(auth)
+  const [userData, userLoading] = useAuthState(getAuth(firebase))
   const [loggedIn, setLoggedIn] = useState(false)
 
   const updateUserName = async (user) => {
