@@ -1,0 +1,47 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.signUpContainer {
+  width: 80%;
+}
+
+.loginTitle {
+  font-size: 1.25em;
+  text-align: center;
+  width: 100%;
+}
+
+.emailLoginContainer {
+  width: 100%;
+}
+
+.emailForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.emailLoginButton {
+  width: 100%;
+}
+
+.externalAuthButton {
+  background-color: #FFF !important;
+  color: #000 !important;
+}
+
+.formError {
+  color: #d32f2f;
+  text-align: left;
+  width: 100%;
+  display: block;
+  font-size: .75em;
+  line-height: 1.25em;
+}

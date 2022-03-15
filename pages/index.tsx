@@ -1,30 +1,58 @@
-import React, { useState, useEffect } from 'react'
-import Login from '../components/Login'
-import styles from '../styles/Home.module.scss'
-import firebase from '../firebase/firebaseClient'
+import React, { useState } from 'react'
+import { doc, setDoc } from 'firebase/firestore'
+import firebase, { auth, firestore } from '../firebase/firebaseClient'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { createCheckoutSession } from '../stripe/createCheckoutSession'
-import usePremiumStatus from '../stripe/usePremiumStatus'
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth'
+import Header from '../components/layout/header/Header'
+import Footer from '../components/layout/footer/Footer'
+import Layout from '../components/layout/Layout'
+import User from '../components/user/User'
+import Intro from '../components/Intro'
 
-export default function Home() {
-  const [user, userLoading] = useAuthState(firebase.auth())
-  const userIsPremium = usePremiumStatus(user)
+const Home = () => {
+  const [userData, userLoading] = useAuthState(getAuth(firebase))
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  const updateUserName = async (user) => {
+    const fullName = window.sessionStorage.getItem('fullName')
+    if (fullName) {
+      updateProfile(auth.currentUser, {
+        displayName: fullName
+      })
+        .then(async () => {
+          const userDetails = {
+            uid: user.uid,
+            email: user.email,
+            name: fullName,
+            provider: user.providerData[0].providerId,
+            photoUrl: user.photoURL
+          }
+          const userRef = doc(firestore, 'users', user.uid)
+          await setDoc(userRef, JSON.parse(JSON.stringify(userDetails)))
+          setLoggedIn(true)
+        })
+    }
+  }
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      if (user.displayName) setLoggedIn(true)
+      else updateUserName(user)
+    }
+  })
+
   return (
-    <div className={styles.container}>
-      {!user && userLoading && <h1>Loading</h1>}
-      {!user && !userLoading && <Login />}
-      {user && !userLoading && (
-        <div>
-          <h1>Hello, {user.displayName}</h1>
-          {!userIsPremium ? (
-            <button onClick={() => createCheckoutSession(user.uid)}>
-              Upgrade to Premium, guy!
-            </button>
-          ) : (
-            <h2>Have a cooke, Premium guy!</h2>
-          )}
-        </div>
-      )}
-    </div>
+    <Layout>
+      <Header user={userData} />
+      <div className='mainContainer'>
+        {!loggedIn && !userData && !userLoading && <Intro />}
+        {loggedIn && userData && !userLoading && (
+          <User userData={userData} />
+        )}
+      </div>
+      <Footer user={userData} setLoggedIn={setLoggedIn} />
+    </Layout>
   )
 }
+
+export default Home

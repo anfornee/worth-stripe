@@ -1,0 +1,41 @@
+.headerContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4em;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 1px 5px rgb(158, 158, 158);
+  z-index: 1000;
+}
+
+.headerLogoTextContainer {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerLogoText {
+  max-width: 25%;
+  margin: 1.5% 3% 0 0;
+}
+
+.headerLoggedInContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  max-width: 15%;
+  margin: 1% 0 0 3%;
+}
+
+.headerDisplayName {
+  margin: 1% 3% 0 0;
+}

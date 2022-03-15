@@ -1,28 +1,23 @@
-import firebase from '../firebase/firebaseClient'
-import getStripe from './initializeStripe'
+import { firestore } from '../firebase/firebaseClient'
+import { collection, addDoc, onSnapshot } from 'firebase/firestore'
 
-export async function createCheckoutSession(uid: string) {
-  const firestore = firebase.firestore()
+export async function createCheckoutSession(uid: string, price: string) {
+  const docRef = await addDoc(collection(firestore, `users/${uid}/checkout_sessions`), {
+    price,
+    success_url: window.location.origin,
+    cancel_url: window.location.origin,
+  });
 
-  // Create a new checkout session in the subcollection inside users document
-  const checkoutSessionRef = await firestore
-    .collection('users')
-    .doc(uid)
-    .collection('checkout_sessions')
-    .add({
-      price: 'price_1KUnMHGcvZKv3JxvlOgnzXIP',
-      success_url: window.location.origin,
-      cancel_url: window.location.origin
-    })
-
-    // Wait for the CheckoutSession to get attached by the extension
-    checkoutSessionRef.onSnapshot(async snap => {
-      const { sessionId } = snap.data()
-      if (sessionId) {
-        // We have a session. let's redirect to Checkout
-        // Init Stripe
-        const stripe = await getStripe()
-        stripe.redirectToCheckout({ sessionId })
-      }
-    })
+  onSnapshot(docRef, (snap) => {
+    const { error, url } = snap.data();
+    if (error) {
+      // Show an error to your customer and
+      // inspect your Cloud Function logs in the Firebase console.
+      alert(`An error occured: ${error.message}`);
+    }
+    if (url) {
+      // We have a Stripe Checkout URL, let's redirect.
+      window.location.assign(url);
+    }
+  })
 }
