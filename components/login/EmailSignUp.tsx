@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {
   createUserWithEmailAndPassword
 } from 'firebase/auth'
-import { doc, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '../../firebase/firebaseClient'
 import Spacer from '../layout/Spacer'
 import { 
@@ -16,12 +16,13 @@ import {
   InputAdornment,
   IconButton,
   FormControl,
-  InputLabel,
-  TextField
+  InputLabel
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-const EmailSignUp = ({ setName, styles }) => {
+const EmailSignUp = ({ styles }) => {
+  const [name, setName] = useState('')
+  const [nameError, setNameError] = useState(false)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = useState('Please enter a valid email.')
@@ -32,13 +33,15 @@ const EmailSignUp = ({ setName, styles }) => {
 
   const signUpWithEmail = e => {
     e.preventDefault()
-    // const validName = validateFirstLastName(userName)
+    const validName = validateFirstLastName(name)
     const validEmail = validateEmail(email)
     const validPassword = validatePassword(password)
 
-    if (validEmail && validPassword) {
+    if (validName && validEmail && validPassword) {
+      setNameError(false)
       setEmailError(false)
       setPasswordError(false)
+      window.sessionStorage.setItem('fullName', name)
       createUserWithEmailAndPassword(auth, email, password)
         .then(async userCredentials => {
           const { user } = userCredentials
@@ -55,6 +58,7 @@ const EmailSignUp = ({ setName, styles }) => {
           }
         })
     } else {
+      setNameError(!validName)
       setEmailError(!validEmail)
       setPasswordError(!validPassword)
     }
@@ -62,29 +66,23 @@ const EmailSignUp = ({ setName, styles }) => {
 
   return (
     <form onSubmit={signUpWithEmail} className={styles.emailForm}>
-      {/* <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
+      <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
         <InputLabel htmlFor='signup-name'>First and Last Name</InputLabel>
         <OutlinedInput
           id='signup-name'
           type='text'
-          value={userName}
+          value={name}
           error={nameError}
           required
-          onChange={e => setUserName(e.target.value)}
+          onChange={e => setName(e.target.value)}
           label='First And Last Name'
         />
       </FormControl>
       {
         nameError
-          ? <span className={styles.formError}>Please enter your first and last.</span>
+          ? <span className={styles.formError}>Please enter only your first and last name.</span>
           : <Spacer height='.95em' />
-      } */}
-      {/* <TextField
-        label='First and Last Name'
-        id='signup-name'
-        sx={{ m: 1, width: '100%' }}
-        onChange={e => setName(e.target.value)}
-      /> */}
+      }
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
         <InputLabel htmlFor='signup-email'>Email</InputLabel>
         <OutlinedInput

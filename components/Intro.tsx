@@ -3,14 +3,14 @@ import Login from './login/Login'
 import SignUp from './login/SignUp'
 import styles from '../styles/Intro.module.scss'
 
-const Intro = ({ setName }) => {
+const Intro = () => {
   const [isSignUp, setIsSignUp] = useState(false)
 
   return (
     <div className={'centeredVertContainer ' + styles.introContainer}>
       {
         isSignUp
-          ? <SignUp setIsSignUp={setIsSignUp} setName={setName} />
+          ? <SignUp setIsSignUp={setIsSignUp} />
           : <Login setIsSignUp={setIsSignUp} />
       }
     </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import styles from '../../styles/Header.module.scss'
-import worthCrest from '../../public/images/worth_crest_small.jpeg'
-import worthText from '../../public/images/worth_main_white_small.jpeg'
+import styles from './Header.module.scss'
+import worthCrest from '../../../public/images/worth_crest_small.jpeg'
+import worthText from '../../../public/images/worth_main_white_small.jpeg'
 
 const Header = ({ user }) => {
   const signedInContent = (

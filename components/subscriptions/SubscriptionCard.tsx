@@ -1,8 +1,8 @@
 import React from 'react'
-import { createCheckoutSession } from '../stripe/createCheckoutSession'
-import Spacer from '../components/layout/Spacer'
+import { createCheckoutSession } from '../../stripe/createCheckoutSession'
+import Spacer from '../layout/Spacer'
 import Button from '@mui/material/Button'
-import styles from '../styles/SubscriptionCard.module.scss'
+import styles from './SubscriptionCard.module.scss'
 
 const SubscriptionCard = ({ userData, productData }) => (
   <div className={styles.subscriptionCard}>

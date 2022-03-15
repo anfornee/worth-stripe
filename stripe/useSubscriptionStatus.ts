@@ -1,25 +1,33 @@
 import { useState, useEffect } from 'react'
 import userSubscription from './userSubscription'
 
-export default function useSubscriptionStatus(user: Object) {
+const useSubscriptionStatus = (user: Object) => {
   const [subscriptionStatus, setSubscriptionSatus] = useState<string>('')
-  let subscriptionType
 
   useEffect(() => {
     if (user) {
       const checkPremiumStatus = async function () {
-        setSubscriptionSatus(await userSubscription())
+        const subscriptionData = await userSubscription()
+        subscriptionData
+          ? setSubscriptionSatus(subscriptionData)
+          : setSubscriptionSatus('User is not subscribed.')
       }
       checkPremiumStatus()
     }
   }, [user])
 
-  if (subscriptionStatus) {
-    subscriptionType = subscriptionStatus
+  if (
+    subscriptionStatus &&
+    subscriptionStatus !== 'User is not subscribed.'
+  ) {
+    return subscriptionStatus
       .charAt(0)
       .toUpperCase() + subscriptionStatus.slice(1)
         .replace(/([a-z])([A-Z])/g, '$1 $2')
+  } 
+  else if (subscriptionStatus === 'User is not subscribed.') {
+    return subscriptionStatus
   }
-
-  return subscriptionType
 }
+
+export default useSubscriptionStatus

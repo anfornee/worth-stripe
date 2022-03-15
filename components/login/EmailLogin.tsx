@@ -31,10 +31,7 @@ const EmailLogin = ({ styles }) => {
       setEmailError(false)
       setPasswordError(false)
       signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          const { user } = userCredential
-          console.log(user)
-        })
+        .then(userCredential => `${userCredential.user.displayName} signed in.`)
         .catch(error => {
           if (error.message === 'Firebase: Error (auth/user-not-found).') {
             setEmailErrorMessage('User not found.')

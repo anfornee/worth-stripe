@@ -1,5 +1,5 @@
 import React from 'react'
-import { auth } from '../firebase/firebaseClient'
+import { auth } from '../../firebase/firebaseClient'
 import Button from '@mui/material/Button'
 
 const Logout = ({ setLoggedIn }) => {

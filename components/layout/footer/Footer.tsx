@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import Logout from '../Logout'
-import styles from '../../styles/Footer.module.scss'
-import worthCrest from '../../public/images/worth_crest_small.jpeg'
+import Logout from '../../login/Logout'
+import styles from './Footer.module.scss'
+import worthCrest from '../../../public/images/worth_crest_small.jpeg'
 
 const Footer = ({ user, setLoggedIn }) => {
   const signedInContent = (

@@ -1,7 +1,7 @@
 import React from 'react'
-import SubscriptionCard from './SubscriptionCard'
-import userStyles from '../styles/User.module.scss'
-import products from '../utils/productsData.json'
+import SubscriptionCard from '../subscriptions/SubscriptionCard'
+import userStyles from './User.module.scss'
+import products from '../../utils/productsData.json'
 
 const UserNotSubscribed = ({ userData }) => (
   <div className='centeredVertContainer'>
