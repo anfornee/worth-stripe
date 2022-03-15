@@ -1,4 +1,3 @@
-'use strict'
 // import * as functions from 'firebase-functions'
 
 // // Start writing Firebase Functions
@@ -8,3 +7,7 @@
 //   functions.logger.info('Hello logs!', { structuredData: true })
 //   response.send('Hello from Firebase!')
 // })
+
+export default function helloWorld () {
+  console.log('hello world')
+}
