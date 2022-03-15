@@ -50,3 +50,7 @@ export const validateFirstLastName = (fullName: string) => {
    ) return false
    return true
 }
+
+export const imageLoader = ({ src }) => {
+  return `/static/media/${src}`
+}

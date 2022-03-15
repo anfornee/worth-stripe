@@ -7,7 +7,8 @@ import {
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '../../firebase/firebaseClient'
 import Button from '@mui/material/Button'
-import googleIcon from '../../public/icons/google-icon.png'
+// import googleIcon from '../../public/icons/google-icon.png'
+const googleIcon = 'https://drive.google.com/uc?id=18Vk8ftBTJzI1sxBgL6mvAVt7YiRqzXNI'
 
 const GoogleLogin = ({ styles, isSignUp = false }) => {
   const signInWithGoogle = async () => {
@@ -28,7 +29,7 @@ const GoogleLogin = ({ styles, isSignUp = false }) => {
       variant='contained'
       className={styles.externalAuthButton}
       onClick={() => signInWithGoogle()}
-      startIcon={<Image src={googleIcon} alt='' width='25' height='25' />}
+      startIcon={<img src={googleIcon} alt='' width='25' height='25' />}
       fullWidth
     >
       {

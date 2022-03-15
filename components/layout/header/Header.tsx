@@ -1,17 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
 import styles from './Header.module.scss'
-import worthCrest from '../../../public/images/worth_crest_small.jpeg'
-import worthText from '../../../public/images/worth_main_white_small.jpeg'
+// import worthCrest from '../../../public/images/worth_crest_small.jpeg'
+// import worthText from '../../../public/images/worth_main_white_small.jpeg'
+const worthCrest = 'https://drive.google.com/uc?id=1es6yegU3Z9YRO3pK35Eume0ddChr7-o8'
+const worthText = 'https://drive.google.com/uc?id=1tl6-_LAUGEN29sI_vjlh57Zm-iaoO7kk'
 
 const Header = ({ user }) => {
   const signedInContent = (
     <div className={styles.headerLoggedInContainer}>
       <div className={styles.headerLogo}>
-        <Image
+        <img
           src={worthCrest}
-          width={600}
-          height={600}
+          width='100%'
+          height='100%'
           alt='Worth logo'
         />
       </div>
@@ -25,10 +27,10 @@ const Header = ({ user }) => {
   const notSignedInContent = (
     <div className={styles.headerLogoTextContainer}>
       <div className={styles.headerLogoText}>
-        <Image
+        <img
           src={worthText}
-          width={800}
-          height={400}
+          width='100%'
+          height='50%'
           alt='Worth logo'
         />
       </div>
