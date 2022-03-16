@@ -58,7 +58,7 @@ const User = ({ userData }) => {
   }, [subscriptionStatus, date, email, compareStripeEmail, getSubscriptionData, userData.email])
 
   return (
-    <div className='centeredVertContainer'>
+    <div className='centeredVertContainer h100'>
       {
         !subscriptionStatus
           ? ''
@@ -75,7 +75,7 @@ const User = ({ userData }) => {
             )
             : date
               ? (
-                <div className={'centeredVertContainer text-center quickFadeIn ' + styles.userContainer}>
+                <div className={'text-center quickFadeIn ' + styles.userContainer}>
                   {userTitle}
                   <UserSubscribed
                     subscriptionStatus={subscriptionStatus}
