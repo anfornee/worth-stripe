@@ -1,0 +1,48 @@
+.loadingScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.75);
+  z-index: 1000;
+}
+
+@keyframes loadingSpinnerInner {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+.loadingSpinner {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+
+.loadingSpinnerInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+
+  div {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #FFF;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: loadingSpinnerInner 1s linear infinite;
+    top: 100px;
+    left: 100px;
+    box-sizing: content-box;
+  }
+
+}

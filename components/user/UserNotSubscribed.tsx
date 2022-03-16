@@ -1,9 +1,8 @@
 import React from 'react'
 import SubscriptionCard from '../subscriptions/SubscriptionCard'
-import styles from './User.module.scss'
 import products from '../../utils/productsData.json'
 
-const UserNotSubscribed = ({ userData }) => (
+const UserNotSubscribed = ({ userData, setIsStripeLoading, styles }) => (
   <div className={'centeredVertContainer ' + styles.userNotSubscribedContainer}>
     <p className={styles.notSubscribedIntro}>
       <span className='block'>
@@ -23,6 +22,7 @@ const UserNotSubscribed = ({ userData }) => (
       <SubscriptionCard
         userData={userData}
         productData={productData}
+        setIsStripeLoading={setIsStripeLoading}
         key={i}
       />
     ))}
