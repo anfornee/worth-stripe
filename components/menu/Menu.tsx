@@ -6,7 +6,7 @@ import Spacer from '../layout/Spacer'
 
 const Menu = ({ menuIsActive, setMenuIsActive, setLoggedIn }) => {
   return (
-    <div style={menuIsActive ? { top: 0 } : { top: '-100vh' }} className={styles.menuContainer}>
+    <div style={menuIsActive ? { top: 0 } : { top: '-10em' }} className={styles.menuContainer}>
       <Logout setMenuIsActive={setMenuIsActive} setLoggedIn={setLoggedIn} />
       <Spacer height='1em' />
       <Button variant='contained' onClick={() => setMenuIsActive(false)}>

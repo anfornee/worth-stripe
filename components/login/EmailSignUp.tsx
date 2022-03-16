@@ -81,7 +81,7 @@ const EmailSignUp = ({ styles }) => {
       {
         nameError
           ? <span className={styles.formError}>Please enter only your first and last name.</span>
-          : <Spacer height='.95em' />
+          : ''
       }
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
         <InputLabel htmlFor='signup-email'>Email</InputLabel>
@@ -98,7 +98,7 @@ const EmailSignUp = ({ styles }) => {
       {
         emailError
           ? <span className={styles.formError}>{emailErrorMessage}</span>
-          : <Spacer height='.95em' />
+          : ''
       }
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
         <InputLabel htmlFor='signup-password'>Password</InputLabel>

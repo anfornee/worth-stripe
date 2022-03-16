@@ -28,11 +28,11 @@ const Header = ({ user, setLoggedIn }) => {
 
   const notSignedInContent = (
     <div className={styles.headerLogoTextContainer}>
-      <div className={styles.headerLogoText}>
+      <div className={styles.headerLogo}>
         <img
-          src={worthText}
+          src={worthCrest}
           width='100%'
-          height='50%'
+          height='100%'
           alt='Worth logo'
         />
       </div>
