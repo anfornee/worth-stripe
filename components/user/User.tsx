@@ -9,12 +9,14 @@ import styles from './User.module.scss'
 import { months } from '../../utils/dates'
 import { firestore } from '../../firebase/firebaseClient'
 import { collection, getDocs } from 'firebase/firestore'
+import LoadingScreen from '../LoadingScreen'
 
 const User = ({ userData }) => {
   const subscriptionStatus = useSubscriptionStatus(userData)
   const [date, setDate] = useState('')
   const [email, setEmail] = useState(userData.email)
   const [newEmail, setNewEmail] = useState(userData.email !== email)
+  const [isStripeLoading, setIsStripeLoading] = useState(false)
 
   const getSubscriptionData = useCallback(async () => {
     const userRef = collection(firestore, `users/${userData.uid}/subscriptions`)
@@ -24,18 +26,13 @@ const User = ({ userData }) => {
     return docSnap.docs[0].id
   }, [userData.uid])
 
-  /**
-   * MAY NOT EVEN NEED TO GET DATE HEAR JUST COMPARE EMAILS
-   */
-  const getNextPaymentDate = useCallback(async subId => {
+  const compareStripeEmail = useCallback(async subId => {
     try {
-      const { nextPaymentUnix, differentEmail } = await postData({
-        url: '/api/get-next-payment-date',
+      const { differentEmail } = await postData({
+        url: '/api/compare-stripe-email',
         data: { email: userData.email, subId }
       })
 
-      const nextPaymentDate = new Date(nextPaymentUnix * 1000)
-      setDate(`${months[nextPaymentDate.getMonth()]} ${nextPaymentDate.getDate()}, ${nextPaymentDate.getFullYear()}`)
       if (differentEmail) setEmail(differentEmail)
     } catch (error) {
       if (error) return new Error(error)
@@ -55,11 +52,10 @@ const User = ({ userData }) => {
       !date
     ) {
       getSubscriptionData()
-        .then(subId => getNextPaymentDate(subId))
+        .then(subId => compareStripeEmail(subId))
     }
     email !== userData.email && setNewEmail(true)
-    // ) getNextPaymentDate()
-  }, [subscriptionStatus, date, email, getNextPaymentDate, getSubscriptionData, userData.email])
+  }, [subscriptionStatus, date, email, compareStripeEmail, getSubscriptionData, userData.email])
 
   return (
     <div className='centeredVertContainer'>
@@ -70,7 +66,11 @@ const User = ({ userData }) => {
             ? (
               <div className={'text-center quickFadeIn ' + styles.userContainer}>
                 {userTitle}
-                <UserNotSubscribed userData={userData} />
+                <UserNotSubscribed
+                  userData={userData}
+                  setIsStripeLoading={setIsStripeLoading}
+                  styles={styles}
+                />
               </div>
             )
             : date
@@ -81,11 +81,15 @@ const User = ({ userData }) => {
                     subscriptionStatus={subscriptionStatus}
                     date={date}
                     email={email}
+                    setIsStripeLoading={setIsStripeLoading}
                     styles={styles}
                   />
                 </div>
               )
               : ''
+      }
+      {
+        isStripeLoading ? <LoadingScreen /> : ''
       }
       {
         newEmail

@@ -16,22 +16,7 @@ const getNextPaymentDate = async (req: NextApiRequest, res: NextApiResponse) => 
 
       if (customer.data[0].email !== email) differentEmail = customer.data[0].email 
 
-      // let customer = await stripe.customers.list({ email })
-      // if (!customer) {
-      //   try {
-      //     const sub = await stripe.subscriptions.retrieve(subId)
-      //     customer = await stripe.customers.list(sub.customer)
-      //   } catch (error) {
-      //     throw Error('Could not get Stripe customer data.' + error)
-      //   }
-      // }
-
-      const data = await stripe.invoices.retrieveUpcoming({
-        customer: customer.data[0].id
-      })
-
       return res.status(200).json({
-        nextPaymentUnix: data.next_payment_attempt,
         differentEmail
       })
     } catch (err: any) {

@@ -4,8 +4,9 @@ import Spacer from '../layout/Spacer'
 import { postData } from '../../utils/helpers'
 
 // const UserSubscribed = ({ createPortalLink, subscriptionStatus, email, styles }) => {
-const UserSubscribed = ({ subscriptionStatus, date, email, styles }) => {
+const UserSubscribed = ({ subscriptionStatus, date, email, setIsStripeLoading, styles }) => {
   const createPortalLink = async () => {
+    setIsStripeLoading(true)
     try {
       const { url, error } = await postData({
         url: '/api/create-portal-link',

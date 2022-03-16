@@ -4,7 +4,7 @@ import Spacer from '../layout/Spacer'
 import Button from '@mui/material/Button'
 import styles from './SubscriptionCard.module.scss'
 
-const SubscriptionCard = ({ userData, productData }) => (
+const SubscriptionCard = ({ userData, productData, setIsStripeLoading }) => (
   <div className={styles.subscriptionCard}>
     <p>
       <span className={'block ' + styles.subTitle}>
@@ -25,7 +25,10 @@ const SubscriptionCard = ({ userData, productData }) => (
     <Button
       variant='contained'
       className={styles.optionButton}
-      onClick={() => createCheckoutSession(userData.uid, productData.price)}
+      onClick={() => {
+        setIsStripeLoading(true)
+        createCheckoutSession(userData.uid, productData.price)
+      }}
     >
       SUBSCRIBE
     </Button>
