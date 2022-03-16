@@ -43,14 +43,13 @@ const Home = () => {
 
   return (
     <Layout>
-      <Header user={userData} />
+      <Header user={userData} setLoggedIn={setLoggedIn} />
       <div className='mainContainer'>
         {!loggedIn && !userData && !userLoading && <Intro />}
         {loggedIn && userData && !userLoading && (
           <User userData={userData} />
         )}
       </div>
-      <Footer user={userData} setLoggedIn={setLoggedIn} />
     </Layout>
   )
 }
