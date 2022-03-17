@@ -64,7 +64,7 @@ const EmailLogin = ({ styles }) => {
       {
         emailError
           ? <span className={styles.formError}>{emailErrorMessage}</span>
-          : <Spacer height='.95em' />
+          : ''
       }
       <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
         <InputLabel htmlFor='login-password'>Password</InputLabel>

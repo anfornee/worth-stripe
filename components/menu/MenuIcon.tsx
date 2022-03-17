@@ -14,8 +14,8 @@ const MenuIcon = ({ setLoggedIn, setMenuIsActive }) => {
     <div className={styles.menuIconConatiner} onClick={handleMenuClicked}>
       <Image
         src={menuIcon}
-        width='40%'
-        height='40%'
+        width='90%'
+        height='90%'
         alt='Menu'
       />
     </div>

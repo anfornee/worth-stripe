@@ -8,7 +8,6 @@ import { doc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '../../firebase/firebaseClient'
 import Button from '@mui/material/Button'
 import googleIcon from '../../public/icons/google-icon.png'
-// const googleIcon = 'https://drive.google.com/uc?id=18Vk8ftBTJzI1sxBgL6mvAVt7YiRqzXNI'
 
 const GoogleLogin = ({ styles, isSignUp = false }) => {
   const signInWithGoogle = async () => {
