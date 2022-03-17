@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-// import Image from 'next/image'
+import Image from 'next/image'
 import styles from './Header.module.scss'
-// import worthCrest from '../../../public/images/worth_crest_small.jpeg'
+import worthCrest from '../../../public/images/worth_crest_small.jpeg'
 // import worthText from '../../../public/images/worth_main_white_small.jpeg'
 import Menu from '../../menu/Menu'
 import MenuIcon from '../../menu/MenuIcon'
-const worthCrest = 'https://drive.google.com/uc?id=1es6yegU3Z9YRO3pK35Eume0ddChr7-o8'
-const worthText = 'https://drive.google.com/uc?id=1tl6-_LAUGEN29sI_vjlh57Zm-iaoO7kk'
+// const worthCrest = 'https://drive.google.com/uc?id=1es6yegU3Z9YRO3pK35Eume0ddChr7-o8'
+// const worthText = 'https://drive.google.com/uc?id=1tl6-_LAUGEN29sI_vjlh57Zm-iaoO7kk'
 
 const Header = ({ user, setLoggedIn }) => {
   const [menuIsActive, setMenuIsActive] = useState(false)
@@ -14,7 +14,7 @@ const Header = ({ user, setLoggedIn }) => {
   const signedInContent = (
     <div className={styles.headerLoggedInContainer}>
       <div className={styles.headerLogo}>
-        <img
+        <Image
           src={worthCrest}
           width='100%'
           height='100%'
@@ -29,7 +29,7 @@ const Header = ({ user, setLoggedIn }) => {
   const notSignedInContent = (
     <div className={styles.headerLogoTextContainer}>
       <div className={styles.headerLogo}>
-        <img
+        <Image
           src={worthCrest}
           width='100%'
           height='100%'
