@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Logout from '../../login/Logout'
 import styles from './Footer.module.scss'
 import worthCrest from '../../../public/images/worth_crest_small.jpeg'
-// const worthCrest = 'https://drive.google.com/uc?id=1es6yegU3Z9YRO3pK35Eume0ddChr7-o8'
 
 const Footer = ({ user, setLoggedIn }) => {
   const signedInContent = (
