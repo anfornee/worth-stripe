@@ -4,16 +4,16 @@ import firebase, { auth, firestore } from '../firebase/firebaseClient'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth'
 import Header from '../components/layout/header/Header'
-import Footer from '../components/layout/footer/Footer'
 import Layout from '../components/layout/Layout'
-import User from '../components/user/User'
 import Intro from '../components/Intro'
+import UserLoggedIn from '../components/UserLoggedIn'
 
 const Home = () => {
   const [userData, userLoading] = useAuthState(getAuth(firebase))
   const [loggedIn, setLoggedIn] = useState(false)
+  const [isUserAccount, setIsUserAccount] = useState(false)
 
-  const updateUserName = async (user) => {
+  const addUserName = async (user) => {
     const fullName = window.sessionStorage.getItem('fullName')
     if (fullName) {
       updateProfile(auth.currentUser, {
@@ -37,18 +37,32 @@ const Home = () => {
   onAuthStateChanged(auth, user => {
     if (user) {
       if (user.displayName) setLoggedIn(true)
-      else updateUserName(user)
+      else addUserName(user)
     }
   })
 
   return (
     <Layout>
-      <Header user={userData} setLoggedIn={setLoggedIn} />
+      <Header
+        user={userData}
+        isUserAccount={isUserAccount}
+        setIsUserAccount={setIsUserAccount}
+        setLoggedIn={setLoggedIn}
+      />
       <div className='mainContainer'>
-        {!loggedIn && !userData && !userLoading && <Intro />}
-        {loggedIn && userData && !userLoading && (
-          <User userData={userData} />
-        )}
+        {
+          !loggedIn && !userData && !userLoading && (
+            <Intro />
+          )
+        }
+        {
+          loggedIn && userData && !userLoading && (
+            <UserLoggedIn
+              userData={userData}
+              isUserAccount={isUserAccount}
+            />
+          )
+        }
       </div>
     </Layout>
   )

@@ -22,6 +22,9 @@ body {
   height: 100vh;
   margin: -4em 0 0;
   overflow: scroll;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
@@ -83,4 +86,13 @@ p {
 
 .quickFadeIn {
   animation: quickFadeIn .5s forwards ease-in-out;
+}
+
+.formError {
+  color: #d32f2f;
+  text-align: left;
+  width: 100%;
+  display: block;
+  font-size: .75em;
+  line-height: 1.25em;
 }

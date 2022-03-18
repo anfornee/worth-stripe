@@ -2,8 +2,9 @@ import React from 'react'
 import SubscriptionCard from '../subscriptions/SubscriptionCard'
 import products from '../../utils/productsData.json'
 
-const UserNotSubscribed = ({ userData, setIsStripeLoading, styles }) => (
+const UserNotSubscribed = ({ userData, setIsStripeLoading, userTitle, styles }) => (
   <div className={'centeredVertContainer ' + styles.userNotSubscribedContainer}>
+    {userTitle}
     <p className={styles.notSubscribedIntro}>
       <span className='block'>
         You are not currently subscribed

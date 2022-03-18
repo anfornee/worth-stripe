@@ -1,10 +1,16 @@
 .userContainer {
-  padding: 2em 0 0;
+  width: 80%;
   // height: calc(100vh - 8em);
 }
 
+.userSubscribedContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding: 4em 0;
+}
+
 .userNotSubscribedContainer {
-  padding: 0 0 2em;
+  padding: 6em 0 2em;
 }
 
 .displayName {
