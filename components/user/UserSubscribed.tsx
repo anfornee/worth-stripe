@@ -1,10 +1,11 @@
 import React from 'react'
-import Button from '@mui/material/Button'
 import Spacer from '../layout/Spacer'
 import { postData } from '../../utils/helpers'
+import { Button } from '@mui/material'
 
 // const UserSubscribed = ({ createPortalLink, subscriptionStatus, email, styles }) => {
-const UserSubscribed = ({ subscriptionStatus, date, email, setIsStripeLoading, styles }) => {
+const UserSubscribed = ({ subscriptionStatus, date, email, setIsStripeLoading, userName, userTitle, styles }) => {
+
   const createPortalLink = async () => {
     setIsStripeLoading(true)
     try {
@@ -22,7 +23,8 @@ const UserSubscribed = ({ subscriptionStatus, date, email, setIsStripeLoading, s
   }
 
   return (
-    <p>
+    <div className={'centeredVertContainer ' + styles.userSubscribedContainer}>
+      {userTitle}
       <Spacer height='1em' />
       <span className={styles.yourPlanText + ' block'}>Your plan:</span>
       <span className={styles.userSubscriptionText + ' block'}>{subscriptionStatus}</span>
@@ -30,13 +32,10 @@ const UserSubscribed = ({ subscriptionStatus, date, email, setIsStripeLoading, s
       <span className={styles.yourPlanText + ' block'}>Next billing date:</span>
       <span className={styles.userSubscriptionText + ' block'}>{date}</span>
       <Spacer height='1em' />
-      <Button
-        variant='contained'
-        onClick={createPortalLink}
-      >
+      <Button variant='contained' fullWidth onClick={createPortalLink}>
         Manage Subscription
       </Button>
-    </p>
+    </div>
   )
 }
 

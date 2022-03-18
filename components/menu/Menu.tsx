@@ -15,8 +15,8 @@ const Menu = ({ menuIsActive, setMenuIsActive, isUserAccount, setIsUserAccount, 
       <div className={styles.menuButtonContainer}>
         {
           isUserAccount
-            ? <Button variant='contained' onClick={handleUserAccount} fullWidth >SUBSCRIPTION</Button>
-            : <Button variant='contained' onClick={handleUserAccount} fullWidth >ACCOUNT</Button>
+            ? <Button variant='contained' onClick={handleUserAccount} fullWidth>SUBSCRIPTION</Button>
+            : <Button variant='contained' onClick={handleUserAccount} fullWidth>ACCOUNT DETAILS</Button>
         }
         <Spacer height='1em' />
         <Logout setMenuIsActive={setMenuIsActive} setLoggedIn={setLoggedIn} fullWidth />

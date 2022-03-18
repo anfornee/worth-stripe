@@ -16,7 +16,11 @@ const User = ({ userData }) => {
   const [date, setDate] = useState('')
   const [email, setEmail] = useState(userData.email)
   const [newEmail, setNewEmail] = useState(userData.email !== email)
+  const [userName, setUserName] = useState(userData.displayName)
   const [isStripeLoading, setIsStripeLoading] = useState(false)
+  const userNotSubscribed = subscriptionStatus === 'User is not subscribed.'
+    ? ' h100'
+    : ''
 
   const getSubscriptionData = useCallback(async () => {
     const userRef = collection(firestore, `users/${userData.uid}/subscriptions`)
@@ -41,7 +45,7 @@ const User = ({ userData }) => {
 
   const userTitle = (
     <h1 className={styles.displayName}>
-      {'Hello, ' + userData.displayName.split(' ')[0]}
+      {'Hello, ' + userName.split(' ')[0]}
     </h1>
   )
 
@@ -58,36 +62,35 @@ const User = ({ userData }) => {
   }, [subscriptionStatus, date, email, compareStripeEmail, getSubscriptionData, userData.email])
 
   return (
-    <div className='centeredVertContainer h100'>
-      {
-        !subscriptionStatus
-          ? ''
-          : subscriptionStatus === 'User is not subscribed.'
-            ? (
-              <div className={'text-center quickFadeIn ' + styles.userContainer}>
-                {userTitle}
+    <div className={'centeredVertContainer' + userNotSubscribed}>
+      <div className={'text-center quickFadeIn ' + styles.userContainer + userNotSubscribed}>
+        {
+          !subscriptionStatus
+            ? ''
+            : userNotSubscribed
+              ? (
                 <UserNotSubscribed
                   userData={userData}
                   setIsStripeLoading={setIsStripeLoading}
+                  userTitle={userTitle}
                   styles={styles}
                 />
-              </div>
-            )
-            : date
-              ? (
-                <div className={'text-center quickFadeIn ' + styles.userContainer}>
-                  {userTitle}
+              )
+              : date
+                ? (
                   <UserSubscribed
                     subscriptionStatus={subscriptionStatus}
                     date={date}
                     email={email}
                     setIsStripeLoading={setIsStripeLoading}
+                    userName={userName}
+                    userTitle={userTitle}
                     styles={styles}
                   />
-                </div>
-              )
-              : ''
-      }
+                )
+                : ''
+        }
+      </div>
       {
         isStripeLoading ? <LoadingScreen /> : ''
       }
