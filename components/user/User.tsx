@@ -5,22 +5,33 @@ import UserSubscribed from './UserSubscribed'
 import UserNotSubscribed from './UserNotSubscribed'
 import { Button } from '@mui/material'
 import Spacer from '../layout/Spacer'
-import styles from './User.module.scss'
 import { months } from '../../utils/dates'
-import { firestore } from '../../firebase/firebaseClient'
-import { collection, getDocs } from 'firebase/firestore'
+import { auth, firestore } from '../../firebase/firebaseClient'
+import { updateEmail } from 'firebase/auth'
+import { collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import LoadingScreen from '../LoadingScreen'
+import styles from './User.module.scss'
 
 const User = ({ userData }) => {
   const subscriptionStatus = useSubscriptionStatus(userData)
   const [date, setDate] = useState('')
   const [email, setEmail] = useState(userData.email)
-  const [newEmail, setNewEmail] = useState(userData.email !== email)
-  const [userName, setUserName] = useState(userData.displayName)
+  const [isNewEmail, setIsNewEmail] = useState(false)
   const [isStripeLoading, setIsStripeLoading] = useState(false)
   const userNotSubscribed = subscriptionStatus === 'User is not subscribed.'
     ? ' h100'
     : ''
+
+  const updateUserEmail = differentEmail => {
+    updateEmail(auth.currentUser, differentEmail)
+      .then(async () => {
+        const userDoc = doc(firestore, 'users', userData.uid)
+        await updateDoc(userDoc, { email: differentEmail })
+        setIsNewEmail(true)
+        setEmail(differentEmail)
+      })
+      .catch(error => console.log(error))
+  }
 
   const getSubscriptionData = useCallback(async () => {
     const userRef = collection(firestore, `users/${userData.uid}/subscriptions`)
@@ -37,7 +48,7 @@ const User = ({ userData }) => {
         data: { email: userData.email, subId }
       })
 
-      if (differentEmail) setEmail(differentEmail)
+      if (differentEmail) updateUserEmail(differentEmail)
     } catch (error) {
       if (error) return new Error(error)
     }
@@ -45,7 +56,7 @@ const User = ({ userData }) => {
 
   const userTitle = (
     <h1 className={styles.displayName}>
-      {'Hello, ' + userName.split(' ')[0]}
+      {'Hello, ' + userData.displayName.split(' ')[0]}
     </h1>
   )
 
@@ -58,8 +69,7 @@ const User = ({ userData }) => {
       getSubscriptionData()
         .then(subId => compareStripeEmail(subId))
     }
-    email !== userData.email && setNewEmail(true)
-  }, [subscriptionStatus, date, email, compareStripeEmail, getSubscriptionData, userData.email])
+  }, [subscriptionStatus, date, getSubscriptionData])
 
   return (
     <div className={'centeredVertContainer' + userNotSubscribed}>
@@ -81,9 +91,9 @@ const User = ({ userData }) => {
                   <UserSubscribed
                     subscriptionStatus={subscriptionStatus}
                     date={date}
-                    email={email}
+                    email={userData.email}
                     setIsStripeLoading={setIsStripeLoading}
-                    userName={userName}
+                    userName={userData.displayName}
                     userTitle={userTitle}
                     styles={styles}
                   />
@@ -91,28 +101,22 @@ const User = ({ userData }) => {
                 : ''
         }
       </div>
+      <LoadingScreen isStripeLoading={isStripeLoading} />
       {
-        isStripeLoading ? <LoadingScreen /> : ''
-      }
-      {
-        newEmail
+        isNewEmail
           ? (
             <div className={styles.newEmailPopupContainer}>
               <div className={styles.newEmailPopup}>
                 <p className={styles.newEmailPopupText}>
                   <span className='block'>
-                    Your email on Stripe is different from you Subscriptions portal email.
+                    Your email has been updated:
                   </span>
                   <span className='block'>
-                    Would you like to update it?
+                    {email}
                   </span>
                   <Spacer height='1em' />
-                  <Button variant='contained' onClick={() => setNewEmail(false)}>
-                    YES
-                  </Button>
-                  <Spacer height='1em' />
-                  <Button variant='contained' onClick={() => setNewEmail(false)}>
-                    NO
+                  <Button variant='contained' fullWidth onClick={() => setIsNewEmail(false)}>
+                    OK
                   </Button>
                 </p>
               </div>
