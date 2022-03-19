@@ -1,14 +1,24 @@
 import React, { useState } from 'react'
+import { auth } from '../../../firebase/firebaseClient'
+import { updatePassword } from 'firebase/auth'
 import Spacer from '../../layout/Spacer'
-import { Button, FormControl, InputLabel, OutlinedInput } from '@mui/material'
-import { validateFirstLastName } from '../../../utils/helpers'
+import { Button, FormControl, IconButton, InputLabel, InputAdornment, OutlinedInput } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { validateFirstLastName, validatePassword } from '../../../utils/helpers'
 import styles from './UserAccount.module.scss'
 
-const UserAccount = ({ email, userName, updateUserName, updateUserPassword }) => {
+const UserAccount = ({ userName, updateUserName }) => {
   const [name, setName] = useState(userName)
   const [nameError, setNameError] = useState('')
-  const [password, setPassword] = useState('•••••••••')
+  const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+
+  const updateUserPassword = () => {
+    updatePassword(auth.currentUser, password)
+      .then(async () => setPassword(''))
+      .catch(error => console.log(error))
+  }
 
   const handleUpdatedNameSubmitted = e => {
     e.preventDefault()
@@ -24,6 +34,12 @@ const UserAccount = ({ email, userName, updateUserName, updateUserPassword }) =>
 
   const handleUpdatedPasswordSubmitted = e => {
     e.preventDefault()
+    const validPassword = validatePassword(password)
+
+    if (validPassword) {
+      setPasswordError('')
+      updateUserPassword()
+    } else setPasswordError('Password must be at least 8 characters long and contain one letter, one number and one special character.')
   }
 
   return (
@@ -59,12 +75,25 @@ const UserAccount = ({ email, userName, updateUserName, updateUserPassword }) =>
           <InputLabel htmlFor='update-password'>Password</InputLabel>
           <OutlinedInput
             id='update-password'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
             value={password}
+            placeholder='••••••••••••'
             error={!!passwordError}
             required
-            onChange={e => setName(e.target.value)}
-            label='First And Last Name'
+            onChange={e => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={() => setShowPassword(!showPassword)}
+                  edge='end'
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label='Password'
           />
         </FormControl>
         {
@@ -78,7 +107,6 @@ const UserAccount = ({ email, userName, updateUserName, updateUserPassword }) =>
         </Button>
       </form>
       <Spacer height='2em' />
-      <p>Email: {email}</p>
       <p>*to update email address please head to Manage Subscription</p>
     </div>
   )

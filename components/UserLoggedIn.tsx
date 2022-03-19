@@ -20,17 +20,11 @@ const UserLoggedIn = ({ userData, isUserAccount }) => {
       .catch(error => console.log(error))
   }
 
-  const updateUserPassword = () => {
-    console.log('update user password')
-  }
-
   const displayContent = isUserAccount
     ? (
       <UserAccount
-        email={userData.email}
         userName={userName}
         updateUserName={updateUserName}
-        updateUserPassword={updateUserPassword}
       />
     )
     : <User userData={userData} />
