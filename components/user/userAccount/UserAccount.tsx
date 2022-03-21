@@ -10,26 +10,48 @@ import styles from './UserAccount.module.scss'
 const UserAccount = ({ userName, updateUserName }) => {
   const [name, setName] = useState(userName)
   const [nameError, setNameError] = useState('')
+  const [nameUpdated, setNameUpdated] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
+  const [passwordUpdated, setPasswordUpdated] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
   const updateUserPassword = () => {
     updatePassword(auth.currentUser, password)
-      .then(async () => setPassword(''))
-      .catch(error => console.log(error))
+      .then(async () => {
+        setPasswordUpdated('Password udpated successfully.')
+        setPassword('')
+      })
+      .catch(error => {
+        console.log(error)
+        setPasswordUpdated('')
+        setPasswordError('Password could not be updated at this time.')
+      })
   }
 
   const handleUpdatedNameSubmitted = e => {
     e.preventDefault()
     const validName = validateFirstLastName(name)
 
-    if (name === userName) return setNameError('Must be different than current name.')
+    if (name === userName) {
+      setNameUpdated('')
+      setNameError('Must be different than current name.')
+    }
 
     if (validName && name !== userName) {
       setNameError('')
       updateUserName(name)
-    } else setNameError('Please enter only your first and last name.')
+        .then(() => setNameUpdated('Name updated successfully.'))
+        .catch(error => {
+          console.log(error)
+          setNameUpdated('')
+          setName(userName)
+          setNameError('Name could not be updated at this time.')
+        })
+    } else {
+      setNameUpdated('')
+      setNameError('Please enter only your first and last name.')
+    }
   }
 
   const handleUpdatedPasswordSubmitted = e => {
@@ -39,13 +61,21 @@ const UserAccount = ({ userName, updateUserName }) => {
     if (validPassword) {
       setPasswordError('')
       updateUserPassword()
-    } else setPasswordError('Password must be at least 8 characters long and contain one letter, one number and one special character.')
+    } else {
+      setPasswordUpdated('')
+      setPasswordError('Password must be at least 8 characters long and contain one letter, one number and one special character.')
+    }
   }
 
   return (
     <div className={'centeredVertContainer quickFadeIn ' + styles.userAccountContainer}>
       <h1>Account Details</h1>
       <Spacer height='1em' />
+      {
+        nameUpdated
+          ? <span className='formSuccess'>{nameUpdated}</span>
+          : ' '
+      }
       <form onSubmit={handleUpdatedNameSubmitted} className='centeredVertContainer'>
         <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
           <InputLabel htmlFor='update-name'>First and Last Name</InputLabel>
@@ -70,6 +100,11 @@ const UserAccount = ({ userName, updateUserName }) => {
         </Button>
       </form>
       <Spacer height='2em' />
+      {
+        passwordUpdated
+          ? <span className='formSuccess'>{passwordUpdated}</span>
+          : ' '
+      }
       <form onSubmit={handleUpdatedPasswordSubmitted} className='centeredVertContainer'>
         <FormControl sx={{ m: 1, width: '100%' }} variant='outlined'>
           <InputLabel htmlFor='update-password'>Password</InputLabel>

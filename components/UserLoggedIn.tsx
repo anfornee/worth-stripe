@@ -8,7 +8,7 @@ import User from '../components/user/User'
 const UserLoggedIn = ({ userData, isUserAccount }) => {
   const [userName, setUserName] = useState(userData.displayName)
 
-  const updateUserName = name => {
+  const updateUserName = name => new Promise((resolve, reject) => {
     updateProfile(auth.currentUser, {
       displayName: name
     })
@@ -16,9 +16,10 @@ const UserLoggedIn = ({ userData, isUserAccount }) => {
         const userDoc = doc(firestore, 'users', userData.uid)
         await updateDoc(userDoc, { name })
         setUserName(name)
+        resolve('success')
       })
-      .catch(error => console.log(error))
-  }
+      .catch(error => reject(error))
+  })
 
   const displayContent = isUserAccount
     ? (
