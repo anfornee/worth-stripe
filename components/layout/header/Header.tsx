@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import styles from './Header.module.scss'
 import worthCrest from '../../../public/images/worth_crest_small.jpeg'
-import Menu from '../../menu/Menu'
 import MenuIcon from '../../menu/MenuIcon'
 
-const Header = ({ user, isUserAccount, setIsUserAccount, setLoggedIn }) => {
-  const [menuIsActive, setMenuIsActive] = useState(false)
-
+const Header = ({ user, setMenuIsActive, setLoggedIn }) => {
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLoggedInContainer}>
@@ -19,13 +16,6 @@ const Header = ({ user, isUserAccount, setIsUserAccount, setLoggedIn }) => {
             alt='Worth logo'
           />
         </div>
-        <Menu
-          menuIsActive={menuIsActive}
-          setMenuIsActive={setMenuIsActive}
-          isUserAccount={isUserAccount}
-          setIsUserAccount={setIsUserAccount}
-          setLoggedIn={setLoggedIn}
-        />
         {
           user
             ? <MenuIcon setLoggedIn={setLoggedIn} setMenuIsActive={setMenuIsActive} />

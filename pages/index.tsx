@@ -6,12 +6,15 @@ import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth'
 import Header from '../components/layout/header/Header'
 import Layout from '../components/layout/Layout'
 import Intro from '../components/Intro'
+import Menu from '../components/menu/Menu'
 import UserLoggedIn from '../components/UserLoggedIn'
+
 
 const Home = () => {
   const [userData, userLoading] = useAuthState(getAuth(firebase))
   const [loggedIn, setLoggedIn] = useState(false)
   const [isUserAccount, setIsUserAccount] = useState(false)
+  const [menuIsActive, setMenuIsActive] = useState(false)
 
   const addUserName = async (user) => {
     const fullName = window.sessionStorage.getItem('fullName')
@@ -45,9 +48,8 @@ const Home = () => {
     <Layout>
       <Header
         user={userData}
-        isUserAccount={isUserAccount}
-        setIsUserAccount={setIsUserAccount}
         setLoggedIn={setLoggedIn}
+        setMenuIsActive={setMenuIsActive}
       />
       <div className='mainContainer'>
         {
@@ -57,10 +59,19 @@ const Home = () => {
         }
         {
           loggedIn && userData && !userLoading && (
-            <UserLoggedIn
-              userData={userData}
-              isUserAccount={isUserAccount}
-            />
+            <>
+              <Menu
+                menuIsActive={menuIsActive}
+                setMenuIsActive={setMenuIsActive}
+                isUserAccount={isUserAccount}
+                setIsUserAccount={setIsUserAccount}
+                setLoggedIn={setLoggedIn}
+              />
+              <UserLoggedIn
+                userData={userData}
+                isUserAccount={isUserAccount}
+              />
+            </>
           )
         }
       </div>

@@ -36,6 +36,7 @@ const User = ({ userData }) => {
   const getSubscriptionData = useCallback(async () => {
     const userRef = collection(firestore, `users/${userData.uid}/subscriptions`)
     const docSnap = await getDocs(userRef)
+    console.log(docSnap.docs[0].data())
     const nextPaymentDate = new Date(docSnap.docs[0].data().current_period_end.seconds * 1000)
     setDate(`${months[nextPaymentDate.getMonth()]} ${nextPaymentDate.getDate()}, ${nextPaymentDate.getFullYear()}`)
     return docSnap.docs[0].id
